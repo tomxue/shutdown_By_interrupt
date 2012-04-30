@@ -39,6 +39,8 @@ MODULE_LICENSE("GPL");
 //MMC2_DAT6, P9-pin5, system default GPIO input with pullup
 #define OMAP3_GPIO138          (138)
 int irq;
+
+//below is for netlink operation...
 struct nlmsghdr *nlh;
 int pid;
 struct sk_buff *skb_out;
@@ -51,6 +53,7 @@ static void hello_nl_recv_msg(struct sk_buff *skb)
    
     printk(KERN_ALERT "Entering: %s\n", __FUNCTION__);
 
+	//below is for netlink operation...
     msg_size=strlen(msg);
     //for receiving...
     nlh=(struct nlmsghdr*)skb->data;    //nlh message comes from skb's data... (sk_buff: unsigned char *data)
@@ -156,6 +159,7 @@ static void hello_exit(void)
     gpio_free(OMAP3_GPIO138);
     printk(KERN_INFO "Goodbye, Tom Xue! From inside kernel driver!\n");
 
+	//below is for netlink operation...
     printk(KERN_INFO "exiting hello module\n");
     netlink_kernel_release(nl_sk);
 }
