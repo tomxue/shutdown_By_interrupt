@@ -1,0 +1,47 @@
+gpio_interrupt.c refer to:
+    nl_kernel.c
+    gpio_interrupt_original.c
+
+make:
+    sudo make -j1 ARCH=arm LOCALVERSION=-x3 -C kernel M=$(pwd) modules
+
+Run output on BB_Ubuntu:
+    ubuntu@omap:~/tom$ sudo insmod gpio_interrupt.ko
+    [  768.329132] OMAP_GPIO_IRQ success! The irq = 298
+    [  768.334228] request_irq success!
+    [  768.337646] Hello, Tom Xue! From inside kernel driver!
+    [  768.343139] Entering: hello_init
+    [  768.346649] Creating netlink successfully!
+    ubuntu@omap:~/tom$ sudo ./nl_user
+    Sending message [  840.537384] Entering: hello_nl_recv_msg
+    to kernel
+    [  840.542816] Netlink received msg payload: Hello
+    Waiting for message from kernel
+    [  887.660125] my_interrupt executed!
+    [  887.663818] irq event 298: bogus return value 18
+    [  887.669769] handlers:
+    [  887.672210] [<bf1ba050>] my_interrupt
+    Received message payload: shutdown
+    Go to shutdown right now!
+
+    ubuntu@omap:~/tom$ Broadcast me[  888.771057] my_interrupt executed!
+    [  888.777374] irq event 298: bogus return value 35
+    [  888.785186] handlers:
+    [  888.790069] [<bf1ba050>] my_interrupt
+    [  888.796386] my_interrupt executed!
+    [  888.802459] Entering: hello_nl_recv_msg
+    [  888.808929] Netlink received msg payload: shutdown�
+    [  888.817260] irq event 298: bogus return value 18
+    [  888.824981] handlers:
+    [  888.829864] [<bf1ba050>] my_interrupt
+    [  888.836242] my_interrupt executed!
+    [  888.842315] Entering: hello_nl_recv_msg
+    [  888.848846] Netlink received msg payload: shutdown�
+    [  888.857177] irq event 298: bogus return value 18
+    [  888.864898] handlers:
+    [  888.869781] [<bf1ba050>] my_interrupt
+    [  888.887786] my_interrupt executed!
+    [  888.893981] Entering: hello_nl_recv_msg
+    [  888.900482] Netlink received msg payload: shutdown.
+    [  888.908752] irq event 298: bogus return value 18
+    [  888.916412] handlers:
